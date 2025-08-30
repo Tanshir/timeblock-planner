@@ -65,30 +65,43 @@
 
 @layer components {
   .time-block {
-    @apply border-b-2 border-black min-h-[80px] grid grid-cols-[120px_1fr] bg-white;
+    @apply border-b-2 border-black min-h-[120px] grid grid-cols-[160px_1fr] bg-white relative;
+  }
+  
+  .time-block:last-child {
+    @apply border-b-0;
   }
   
   .time-label {
-    @apply bg-black text-white p-3 font-black text-lg flex items-center justify-center border-r-2 border-black;
+    @apply bg-black text-white p-4 font-black flex items-center justify-center border-r-2 border-black relative;
   }
   
   .task-area {
-    @apply p-3 bg-white;
+    @apply p-4 bg-white;
   }
   
   .task-item {
-    @apply border-b border-gray-300 py-2 font-medium text-black bg-transparent resize-none outline-none;
+    @apply border-b border-gray-300 py-3 font-medium text-black bg-transparent resize-none outline-none min-h-[40px] leading-relaxed;
+    transition: border-color 0.2s ease;
+  }
+  
+  .task-item:focus {
+    @apply border-black;
+  }
+  
+  .task-item:last-child {
+    @apply border-b-0;
   }
   
   .add-task-btn {
-    @apply text-xs font-black text-gray-600 hover:text-black cursor-pointer mt-2 uppercase tracking-wide;
+    @apply text-sm font-black text-gray-600 hover:text-black cursor-pointer mt-3 uppercase tracking-wide transition-colors duration-200;
   }
   
-  .planner-title {
-    @apply font-black text-4xl text-black uppercase tracking-wide text-center py-8 border-b-4 border-black;
+  .add-task-btn:hover {
+    @apply transform scale-105;
   }
   
   .print-btn {
-    @apply bg-black text-white px-6 py-3 font-black uppercase tracking-wide hover:bg-gray-800 transition-colors;
+    @apply bg-black text-white px-8 py-4 font-black uppercase tracking-wide hover:bg-gray-800 transition-all duration-200 shadow-lg hover:shadow-xl;
   }
 }
