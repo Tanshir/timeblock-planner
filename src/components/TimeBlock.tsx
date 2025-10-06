@@ -1,13 +1,16 @@
 
 import React from 'react';
 import { TaskList } from './TaskList';
+import { Task } from '@/pages/Index';
 
 interface TimeBlockProps {
   startTime: string;
   endTime: string;
-  tasks: string[];
+  tasks: Task[];
+  isActive?: boolean;
+  focusMode?: boolean;
   onTimeChange: (field: 'startTime' | 'endTime', newTime: string) => void;
-  onTasksChange: (tasks: string[]) => void;
+  onTasksChange: (tasks: Task[]) => void;
   onRemove?: () => void;
 }
 
@@ -15,12 +18,14 @@ export function TimeBlock({
   startTime, 
   endTime, 
   tasks, 
+  isActive = false,
+  focusMode = false,
   onTimeChange, 
   onTasksChange, 
   onRemove 
 }: TimeBlockProps) {
   return (
-    <div className="time-block print-border group">
+    <div className={`time-block print-border group transition-all ${isActive ? 'active-time-block' : ''}`}>
       <div className="time-label">
         <div className="flex flex-col items-center gap-1">
           <input
@@ -39,7 +44,7 @@ export function TimeBlock({
             placeholder="00:00"
           />
         </div>
-        {onRemove && (
+        {onRemove && !focusMode && (
           <button
             onClick={onRemove}
             className="absolute top-2 right-2 text-white hover:text-red-300 opacity-0 group-hover:opacity-100 transition-opacity no-print text-xs font-black"

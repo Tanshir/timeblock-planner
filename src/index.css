@@ -66,10 +66,37 @@
 @layer components {
   .time-block {
     @apply border-b-2 border-black min-h-[120px] grid grid-cols-[160px_1fr] bg-white relative;
+    transition: all 0.3s ease;
+  }
+  
+  .time-block:hover {
+    @apply bg-gray-50;
   }
   
   .time-block:last-child {
     @apply border-b-0;
+  }
+  
+  .active-time-block {
+    background: linear-gradient(90deg, #fffbeb 0%, #fef3c7 100%);
+    box-shadow: inset 4px 0 0 0 #fbbf24;
+    position: relative;
+  }
+  
+  .active-time-block::before {
+    content: '▶';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fbbf24;
+    font-size: 16px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
   }
   
   .time-label {

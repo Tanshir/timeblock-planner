@@ -1,58 +1,47 @@
 
 import React from 'react';
+import { Task } from '@/pages/Index';
 
 interface TaskListProps {
-  tasks: string[];
-  onTasksChange: (tasks: string[]) => void;
-}
-
-interface Task {
-  text: string;
-  completed: boolean;
+  tasks: Task[];
+  onTasksChange: (tasks: Task[]) => void;
 }
 
 export function TaskList({ tasks, onTasksChange }: TaskListProps) {
-  // Convert string array to Task objects for backward compatibility
-  const taskObjects: Task[] = tasks.map(task => 
-    typeof task === 'string' 
-      ? { text: task, completed: false }
-      : task as Task
-  );
-
   const addTask = () => {
-    const newTask = { text: '', completed: false };
-    const newTasks = [...taskObjects, newTask];
-    onTasksChange(newTasks.map(t => typeof t === 'string' ? t : t.text));
+    const newTask: Task = { text: '', completed: false };
+    const newTasks = [...tasks, newTask];
+    onTasksChange(newTasks);
   };
 
   const updateTask = (index: number, value: string) => {
-    const newTasks = [...taskObjects];
+    const newTasks = [...tasks];
     newTasks[index] = { ...newTasks[index], text: value };
     
     // Auto-add new task when user starts typing in the last empty task
-    if (index === taskObjects.length - 1 && value.trim() !== '' && taskObjects[taskObjects.length - 1].text === '') {
+    if (index === tasks.length - 1 && value.trim() !== '' && tasks[tasks.length - 1].text === '') {
       newTasks.push({ text: '', completed: false });
     }
     
-    onTasksChange(newTasks.map(t => t.text));
+    onTasksChange(newTasks);
   };
 
   const toggleTaskCompletion = (index: number) => {
-    const newTasks = [...taskObjects];
+    const newTasks = [...tasks];
     newTasks[index] = { ...newTasks[index], completed: !newTasks[index].completed };
-    onTasksChange(newTasks.map(t => t.text));
+    onTasksChange(newTasks);
   };
 
   const removeTask = (index: number) => {
-    if (taskObjects.length > 1) {
-      const newTasks = taskObjects.filter((_, i) => i !== index);
-      onTasksChange(newTasks.map(t => t.text));
+    if (tasks.length > 1) {
+      const newTasks = tasks.filter((_, i) => i !== index);
+      onTasksChange(newTasks);
     }
   };
 
   return (
     <div>
-      {taskObjects.map((task, index) => (
+      {tasks.map((task, index) => (
         <div key={index} className="flex items-center group">
           <button
             onClick={() => toggleTaskCompletion(index)}
