@@ -199,7 +199,7 @@ const Index = () => {
     
     timeBlocks.forEach(block => {
       block.tasks.forEach(task => {
-        if (task.text.trim()) {
+        if (task?.text?.trim()) {
           totalTasks++;
           if (task.completed) completedTasks++;
           if (task.priority === 'high') highPriority++;

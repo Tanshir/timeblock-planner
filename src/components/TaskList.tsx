@@ -25,7 +25,7 @@ export function TaskList({ tasks, onTasksChange }: TaskListProps) {
     newTasks[index] = { ...newTasks[index], text: value };
     
     // Auto-add new task when user starts typing in the last empty task
-    if (index === tasks.length - 1 && value.trim() !== '' && tasks[tasks.length - 1].text === '') {
+    if (index === tasks.length - 1 && value.trim() !== '' && (tasks[tasks.length - 1]?.text || '') === '') {
       newTasks.push({ text: '', completed: false, priority: 'medium' });
     }
     
@@ -89,7 +89,7 @@ export function TaskList({ tasks, onTasksChange }: TaskListProps) {
             </select>
             <span className="print:inline hidden text-xs">{getPriorityIcon(task.priority)}</span>
             <textarea
-              value={task.text}
+              value={task?.text || ''}
               onChange={(e) => updateTask(index, e.target.value)}
               className={`flex-1 bg-transparent outline-none resize-none font-medium ${task.completed ? 'line-through text-gray-500' : 'text-gray-800'}`}
               placeholder="Start typing to add a task..."
@@ -97,7 +97,7 @@ export function TaskList({ tasks, onTasksChange }: TaskListProps) {
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
-                  if (task.text.trim() !== '') {
+                  if (task?.text?.trim()) {
                     addTask();
                   }
                 }
